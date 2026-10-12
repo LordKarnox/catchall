@@ -1,1 +1,28 @@
+class ColorCounter:
+    def __init__(self, pythoners):
+        self.pythoners = pythoners
 
+    def count_colors(self):
+        counts = {}
+
+        for person in self.pythoners["responses"]:
+            color = person.get("favorite_color",
+                               person.get("favorite color", ""))
+
+            if color:
+                for color in color.lower().split(" and "):
+                    if color not in counts:
+                        counts[color] = 0
+                    counts[color] += 1
+
+        for color in counts:
+            print(color, counts[color])
+
+        if counts:
+            print("Most popular:", max(counts, key=counts.get))
+        else:
+            print("No colors found.")
+
+
+counter = ColorCounter(pythoners)
+counter.count_colors()
